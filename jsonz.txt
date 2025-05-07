@@ -1,0 +1,1 @@
+./app '{"id" : "S_V1-102","url" : "https://media.database/v2/BppG_qNKbyg?si=K6EpT_GTcxBRSSfH","window_id" : "Win102", "player_type" : "KMP"}'
