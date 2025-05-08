@@ -1,7 +1,19 @@
 #include "session.h"
 
-Session::Session(std::string req_string)
+Server::Server()
 {
+    is_running = false;
+}
+
+bool Server::isRunning()
+{
+    return is_running;
+}
+
+Session::Session(std::string req_string, IServer *serv)
+{
+    _server = serv;
+
     json req = json::parse(req_string);
     if(req.contains("id"))
     {
@@ -38,6 +50,14 @@ Session::Session(std::string req_string)
     {
         player_type = "";
     }
+}
+
+bool Session::start_session()
+{
+    if(!_server->isRunning())
+    return false;
+
+    return true;
 }
 
 std::string Session::get_session_id()

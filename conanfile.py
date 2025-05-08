@@ -12,8 +12,9 @@ class Catch2TestConan(ConanFile):
         cmake_layout(self)
 
     def requirements(self):
-        self.requires("catch2/3.8.0")
+        self.requires("catch2/3.5.2")
         self.requires("nlohmann_json/3.12.0")
+        self.requires("fakeit/2.4.1", options={"fakeit/*:integration": "catch"})
     
     def generate(self):
         deps = CMakeDeps(self)

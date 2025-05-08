@@ -1,11 +1,16 @@
 #include <catch2/catch_test_macros.hpp>
 #include <catch2/matchers/catch_matchers_all.hpp>
+#include <fakeit.hpp>
 #include <nlohmann/json.hpp>
 #include "session.h"
+#include "server.h"
 
 using json = nlohmann::json;
 using Catch::Matchers::StartsWith;
 using Catch::Matchers::ContainsSubstring;
+using namespace fakeit;
+
+Mock<IServer> mock_server;
 
 //Test api parameters
 std::string m_id = "S_V1-102";
@@ -22,9 +27,20 @@ json m_req =
     {"player_type", m_player_type}
 };
 
+TEST_CASE( "Server Unit Test", "[Server]") {
+    
+
+    SECTION("Server Start", "[Check if session can be started given server is running or not]") {
+        When(Method(mock_server, isRunning)).Return(false);
+        Session session(m_req.dump(), &mock_server.get());
+
+        REQUIRE(session.start_session() == true);
+    }
+}
+
 TEST_CASE( "Session Class Unit Test", "[Session]" ) {
     
-    Session mock_session(m_req.dump());
+    Session mock_session(m_req.dump(), &mock_server.get());
 
     
     SECTION("ID format", "[check session and window id prefix format]") {

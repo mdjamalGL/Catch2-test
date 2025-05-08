@@ -9,9 +9,9 @@ int main(int argc, char* argv[])
         std::cout<<"Too less parameter\nFormat : ./app {json_string}\n";
     }
     std::string string_req = std::string(argv[1]);
-    
-    Session session(string_req);
+    IServer *server = new Server();
+    Session session(string_req, server);
     session.print_details();
-    
+
     return 0;
 }
